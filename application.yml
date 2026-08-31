@@ -1,0 +1,14 @@
+# Shared configuration inherited by all services.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
