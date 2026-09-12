@@ -17,26 +17,28 @@ spring:
 #              - uri: http://localhost:8083
 #              - uri: http://localhost:8183
     gateway:
-      routes:
-        - id: customer-service
-          uri: lb://customer-service
-          predicates:
-            - Path=/api/customers,/api/customers/**
-#        - id: account-service
-#          uri: lb://account-service
-#          predicates:
-#            - Path=/api/accounts/**
-#        - id: customer-accounts
-#          uri: lb://account-service
-#          predicates:
-#            - Path=/api/customers/*/accounts
-#        - id: transaction-service
-#          uri: lb://transaction-service
-#          predicates:
-#            - Path=/api/transactions/**
-#        - id: account-transactions
-#          uri: lb://transaction-service
-#          predicates:
-#            - Path=/api/accounts/*/transactions
-      default-filters:
-        - AddRequestHeader=X-Gateway-Request, enterprise-ai-platform
+      server:
+        webflux:
+          routes:
+            - id: customer-service
+              uri: lb://customer-service
+              predicates:
+                - Path=/api/customers,/api/customers/**
+        #        - id: account-service
+        #          uri: lb://account-service
+        #          predicates:
+        #            - Path=/api/accounts/**
+        #        - id: customer-accounts
+        #          uri: lb://account-service
+        #          predicates:
+        #            - Path=/api/customers/*/accounts
+        #        - id: transaction-service
+        #          uri: lb://transaction-service
+        #          predicates:
+        #            - Path=/api/transactions/**
+        #        - id: account-transactions
+        #          uri: lb://transaction-service
+        #          predicates:
+        #            - Path=/api/accounts/*/transactions
+          default-filters:
+            - AddRequestHeader=X-Gateway-Request, enterprise-ai-platform
