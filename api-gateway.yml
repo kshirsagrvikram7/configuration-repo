@@ -42,3 +42,11 @@ spring:
         #            - Path=/api/accounts/*/transactions
           default-filters:
             - AddRequestHeader=X-Gateway-Request, enterprise-ai-platform
+management:
+  endpoint:
+    gateway:
+      access: read-only
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway
