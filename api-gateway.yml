@@ -8,14 +8,16 @@ spring:
         simple:
           instances:
             customer-service:
-              - uri: http://localhost:8081
-              - uri: http://localhost:8181
+              - uri: http://customer-service:8081
+
             account-service:
               - uri: http://localhost:8082
               - uri: http://localhost:8182
+
             transaction-service:
               - uri: http://localhost:8083
               - uri: http://localhost:8183
+
     gateway:
       server:
         webflux:
@@ -24,29 +26,89 @@ spring:
               uri: lb://customer-service
               predicates:
                 - Path=/api/customers/**
+
             - id: account-service
               uri: lb://account-service
               predicates:
                 - Path=/api/accounts/**
+
             - id: customer-accounts
               uri: lb://account-service
               predicates:
                 - Path=/api/customers/*/accounts
+
             - id: transaction-service
               uri: lb://transaction-service
               predicates:
                 - Path=/api/transactions/**
+
             - id: account-transactions
               uri: lb://transaction-service
               predicates:
                 - Path=/api/accounts/*/transactions
+
           default-filters:
             - AddRequestHeader=X-Gateway-Request, enterprise-ai-platform
+
 management:
   endpoint:
     gateway:
       access: read-only
+
   endpoints:
     web:
       exposure:
         include: health,info,metrics,gateway
+
+#server:
+#  port: 8080
+#
+#spring:
+#  cloud:
+#    discovery:
+#      client:
+#        simple:
+#          instances:
+#            customer-service:
+#              - uri: http://localhost:8081
+#              - uri: http://localhost:8181
+#            account-service:
+#              - uri: http://localhost:8082
+#              - uri: http://localhost:8182
+#            transaction-service:
+#              - uri: http://localhost:8083
+#              - uri: http://localhost:8183
+#    gateway:
+#      server:
+#        webflux:
+#          routes:
+#            - id: customer-service
+#              uri: lb://customer-service
+#              predicates:
+#                - Path=/api/customers/**
+#            - id: account-service
+#              uri: lb://account-service
+#              predicates:
+#                - Path=/api/accounts/**
+#            - id: customer-accounts
+#              uri: lb://account-service
+#              predicates:
+#                - Path=/api/customers/*/accounts
+#            - id: transaction-service
+#              uri: lb://transaction-service
+#              predicates:
+#                - Path=/api/transactions/**
+#            - id: account-transactions
+#              uri: lb://transaction-service
+#              predicates:
+#                - Path=/api/accounts/*/transactions
+#          default-filters:
+#            - AddRequestHeader=X-Gateway-Request, enterprise-ai-platform
+#management:
+#  endpoint:
+#    gateway:
+#      access: read-only
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info,metrics,gateway
