@@ -3,3 +3,18 @@ server:
 
 app:
   service-name: customer-service
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/customer_db
+    username: enterprise_user
+    password: enterprise_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
